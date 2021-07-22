@@ -1,26 +1,24 @@
 <template>
-  <div class="icons-container">
-    <aside>
-      <a href="https://panjiachen.github.io/vue-element-admin-site/guide/advanced/icon.html" target="_blank">Add and use
-      </a>
-    </aside>
+  <div class="icons-container app-container">
+
+    <el-divider content-position="left"> Icons List </el-divider>
     <el-tabs type="border-card">
-      <el-tab-pane label="Icons">
+      <el-tab-pane :label="`Font-awesome5 Icons( ${faIcons.length} )`">
         <div class="grid">
-          <div v-for="item of svgIcons" :key="item" @click="handleClipboard(generateIconCode(item),$event)">
+          <div v-for="item of faIcons" :key="item" @click="handleClipboard(generateFaIconCode(item),$event)">
             <el-tooltip placement="top">
               <div slot="content">
-                {{ generateIconCode(item) }}
+                {{ generateFaIconCode(item) }}
               </div>
               <div class="icon-item">
-                <svg-icon :icon-class="item" class-name="disabled" />
+                <fa-icon :icon="item" size="1x" />
                 <span>{{ item }}</span>
               </div>
             </el-tooltip>
           </div>
         </div>
       </el-tab-pane>
-      <el-tab-pane label="Element-UI Icons">
+      <el-tab-pane :label="`Element-UI Icons( ${elementIcons.length} )`">
         <div class="grid">
           <div v-for="item of elementIcons" :key="item" @click="handleClipboard(generateElementIconCode(item),$event)">
             <el-tooltip placement="top">
@@ -35,6 +33,26 @@
           </div>
         </div>
       </el-tab-pane>
+      <el-tab-pane :label="`UserIcons( ${svgIcons.length} )`">
+        <div class="grid">
+          <div v-for="item of svgIcons" :key="item" @click="handleClipboard(generateIconCode(item),$event)">
+            <el-tooltip placement="top">
+              <div slot="content">
+                {{ generateIconCode(item) }}
+              </div>
+              <div class="icon-item">
+                <svg-icon :icon-class="item" class-name="disabled" />
+                <span>{{ item }}</span>
+              </div>
+            </el-tooltip>
+          </div>
+        </div>
+      </el-tab-pane>
+      <el-tab-pane label="play ground">
+        <el-card>
+          <el-button type="success"> <fa-icon icon="coffee" /> Coffee </el-button>
+        </el-card>
+      </el-tab-pane>
     </el-tabs>
   </div>
 </template>
@@ -43,13 +61,15 @@
 import clipboard from '@/utils/clipboard'
 import svgIcons from './svg-icons'
 import elementIcons from './element-icons'
+import faIcons from './fa-icons'
 
 export default {
   name: 'Icons',
   data() {
     return {
       svgIcons,
-      elementIcons
+      elementIcons,
+      faIcons
     }
   },
   methods: {
@@ -59,8 +79,11 @@ export default {
     generateElementIconCode(symbol) {
       return `<i class="el-icon-${symbol}" />`
     },
+    generateFaIconCode(symbol) {
+      return `<fa-icon icon="${symbol}" />`
+    },
     handleClipboard(text, event) {
-      clipboard(text, event)
+      if (typeof (text) === 'string') clipboard(text, event)
     }
   }
 }

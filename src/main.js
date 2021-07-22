@@ -20,6 +20,13 @@ import './utils/error-log' // error log
 
 import * as filters from './filters' // global filters
 
+// font-awesome-free
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { fas } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+library.add(fas)
+Vue.component('fa-icon', FontAwesomeIcon)
+
 /**
  * If you don't want to use mock-server
  * you want to use MockJs for mock api
